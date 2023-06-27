@@ -14,14 +14,27 @@ const host = "http://127.0.0.1:8000";
 const Checkout = () => {
   const navigate = useNavigate();
 
-  const { orderInfo } = useContext(ShoppingContext);
-  const { userInfo, setUserInfo } = useContext(ShoppingContext);
-  const { setClientSecret } = useContext(ShoppingContext);
+  const { orderInfo, setOrderInfo, userInfo, setUserInfo, setClientSecret } =
+    useContext(ShoppingContext);
+  
+
 
   
 
   const handleUserInfo = (event) => {
     event.preventDefault();
+
+    const tempArr = [...orderInfo.shoppingCart];
+    const reCorrectArr = tempArr.map((ele) => {
+      const image = String(ele.image).split("/")[3];
+      //console.log(image);
+      return {
+        ...ele,
+        image,
+      };
+    });
+    console.log(`hello world`, reCorrectArr);
+    setOrderInfo({ ...orderInfo, shoppingCart: reCorrectArr });
 
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData.entries());

@@ -5,7 +5,7 @@ export const ShoppingContext = createContext(null);
 const ShoppingContextProvider = ({ children }) => {
 
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [orderInfo, setOrderInfo] = useState({});
+  const [orderInfo, setOrderInfo] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
 
   const [paymentStatus, setPaymentStatus] = useState("");

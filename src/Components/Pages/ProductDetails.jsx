@@ -25,7 +25,7 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   
-  //let EXPIRE = 1000 *10;
+  
   let { id } = useParams();
   const img =
     product && product.image ? product.image.replace("public", "") : "";
@@ -38,6 +38,7 @@ const ProductDetails = () => {
       .then((response) => {
         //console.log(response.data.product);
         if (response.data.status === 200) {
+          console.log(response.data.product);
           setProduct(response.data.product);
         }
       })
@@ -107,6 +108,7 @@ const ProductDetails = () => {
 
   const handleAddtoCart = () => {
     
+    
 
     setShoppingCart((pre) => {
       const existingProductIndex = pre.findIndex(
@@ -124,10 +126,12 @@ const ProductDetails = () => {
         return updatedCart;
       } else {
         // If the product does not exist in the cart, add it as a new item
+        const { title, image } = product;
         const updatedCart = [
           ...pre,
           {
-            ...product,
+            title,
+            image,
             quantity: quantity,
             size: selectedSize,
             color: selectedColor,

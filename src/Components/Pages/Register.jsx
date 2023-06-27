@@ -27,6 +27,7 @@ const Register = () => {
 
   const registerSubmit = (event) => {
     event.preventDefault();
+    
     const data = {
       name: registerInput.name,
       email: registerInput.email,
