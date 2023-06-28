@@ -52,14 +52,32 @@ const Checkout = () => {
       console.log(isEmpty);
       swal("Warning", "Please confirm your information", "warning");
     } else if (!isEmpty) {
+
+      const orderDetails = {
+        orderInformation: orderInfo,
+        userInformation: userInfo,
+      };
+      const orderSet = {
+        order: [...orderDetails.orderInformation.shoppingCart],
+        user: [
+          {
+            ...orderDetails.userInformation,
+          },
+        ],
+      };
+
+      //console.log(`orderSet is success`, orderSet);
       
       axios
         .post("/api/payment-intent", {
           amount: orderInfo.total,
+          order_info: orderSet,
         })
         .then((result) => {
-          const { client_secret } = result.data;
+          const { client_secret,order_info } = result.data;
           console.log(result.data);
+          console.log(`order info response success!`,order_info);
+          localStorage.setItem("orderInfo ", JSON.stringify(order_info));
           setClientSecret(client_secret);
           navigate("/payment");
         });

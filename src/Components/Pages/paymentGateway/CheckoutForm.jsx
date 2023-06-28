@@ -2,6 +2,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useContext, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import {ShoppingContext} from "../../../context/ShoppingContext";
+import axios from "axios";
 
 
 const CheckoutForm = () => {
@@ -12,22 +13,40 @@ const CheckoutForm = () => {
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const { orderInfo, userInfo } = useContext(ShoppingContext);
+  //const { orderInfo, userInfo } = useContext(ShoppingContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(orderInfo);
-    console.log(userInfo);
+    //console.log(orderInfo);
+    //console.log(userInfo);
 
-    
+    /*const orderDetails = {
+      orderInformation: orderInfo,
+      userInformation: userInfo,
+    }; */
 
-    const orderDetails = {
-      orderInformation:  orderInfo,
-      userInformation:  userInfo,
-    };
+   /* localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+    const orderDetailsLast = JSON.parse(localStorage.getItem("orderDetails"));
+    const orderSet = {
+      order: [...orderDetailsLast.orderInformation.shoppingCart],
+      user: [
+        {
+          ...orderDetailsLast.userInformation,
+        },
+      ],
+    }; */
 
-    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+    // axios.post(`/api/order-details`, orderSet).then((res) => {
+    //   if (res.data.status === 200) {
+    //     //console.log(res.data.orederData);
+    //     const data = res.data.orederData;
+    //     localStorage.setItem("orderData", data);
+
+    //   } else {
+    //     console.log('response faild');
+    //   }
+    // });
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -42,15 +61,12 @@ const CheckoutForm = () => {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}/completion`,
-        
       },
     });
 
     if (!error) {
       console.log("success");
     }
-
-    
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);

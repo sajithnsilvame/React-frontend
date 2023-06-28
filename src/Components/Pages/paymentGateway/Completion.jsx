@@ -15,7 +15,7 @@ const Completion = () => {
   useEffect(() => {
     showToast();
     
-    setTimeout(() => {
+    /* setTimeout(() => {
       const orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
       //console.log(orderDetails);
 
@@ -45,7 +45,7 @@ const Completion = () => {
 
       //localStorage.removeItem("orderDetails");
 
-    }, 500);
+    }, 500); */
 
   }, []);
 
